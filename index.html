@@ -5,28 +5,66 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Práctica angular</title>
 	<script src="assets/js/angular.js"></script>
+	<style type="text/css">
+		label
+		{
+			display: inline;
+			width: 100%;
+		}
+
+		table
+		{
+			padding: 10px;
+			margin-top: 10px;
+			width: 100%;
+			border: 1px solid black;
+		}
+	</style>
 </head>
 
 <body>
 	<div ng-controller="ctrl">
-		<input type="text" ng-model="nombre">
-		<p>Hola {{ persona.nombre }}</p>
+		<label for="nombre">Nombre</label>
+		<input type="text" ng-bind="nombre" name="nombre" value="{{ nombre }}">
+
+		<label for="direccion">Direccion</label>
+		<input type="text" ng-bind="direccion" name="direccion" value="{{ direccion }}">
+		
+		<label for="celular">Celular</label>
+		<input type="text" ng-bind="celular" name="celular" value="{{ celular }}">
+					
+		<label for="correo">Correo</label>
+		<input type="text" ng-bind="correo" name="correo" value="{{ correo }}">
+
+		<table>
+			<tr>
+				<td>Nombre</td>
+				<td>Dirección</td>
+				<td>Celular</td>
+				<td>Correo</td>
+			</tr>
+			<tr>
+				<td> {{ nombre }} </td>
+				<td> {{ direccion }} </td>
+				<td> {{ celular }} </td>
+				<td> {{ correo }} </td>
+			</tr>
+		</table>
 	</div>
 
 	<script type="text/javascript">
 		var app = angular.module('app', []);
 		app.controller('ctrl', function($scope) {
-			setTimeout(function() {
-				$scope.$apply(function() {
-					$scope.nombre = "Vinicio";
-					$scope.persona = {
-						nombre: 'Vinicio',
-						apPaterno: 'Martínez',
-						apMaterno: 'López'
-					};
-				});
-				console.log($scope.nombre);
-			}, 1000)
+			$scope.persona = {
+				nombre: 'Vinicio',
+				direccion: 'Mazatlán',
+				celular: '000000',
+				correo: '2016030004@upsin.edu.mx'
+			};
+			$scope.nombre = "Vinicio";
+			$scope.direccion = "Mazatlán";
+			$scope.celular = "000000";
+			$scope.correo = "2016030004@upsin.edu.mx";
 		});
 	</script>
 </body>
