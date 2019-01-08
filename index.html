@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Práctica angular</title>
+	<script src="assets/js/angular.js"></script>
+</head>
+
+<body>
+	<div ng-controller="ctrl">
+		<input type="text" ng-model="nombre/">
+		<p>Hola {{ nombre }}</p>
+	</div>
+
+	<script type="text/javascript">
+		var app = angular.module('app', []);
+		app.controller('ctrl', function($scope) {
+			$scope.nombre = "";
+		});
+	</script>
+</body>
+</html>
