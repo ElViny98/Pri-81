@@ -6,40 +6,80 @@
 	<title>Angular práctica 2</title>
 	<script src="assets/js/angular.js"></script>
 	<link rel="stylesheet" href="assets/styles/bootstrap.min.css">
+	<style type="text-css">
+		input[type=text]
+		{
+			padding: 10;
+			margin: 0 10;
+		} 
+	</style>
 </head>
 <body>
-	<div class="container" ng-controller="ctrl">
+	<div class="container-fluid" ng-controller="ctrl">
 		<div class="row">
 			<div class="col-12">
 				<h1 class="title"> {{ titulo }} </h1>
 			</div>
 			<div class="col-12" style="margin-top: 20px;">
-				<table>
+				<div class="form-group row">
+					<label for="nombre" class="col-2 col-form-label">Nombre: </label>
+					<div class="col-10">
+						<input type="text" class="form-control" ng-model="nombre" name="nombre">
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label for="nombre" class="col-2 col-form-label">Dirección: </label>
+					<div class="col-10">
+						<input type="text" class="form-control" ng-model="direccion" name="nombre">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="nombre" class="col-2 col-form-label">RFC: </label>
+					<div class="col-10">
+						<input type="text" class="form-control" ng-model="rfc" name="nombre">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="nombre" class="col-2 col-form-label">CURP: </label>
+					<div class="col-10">
+						<input type="text" class="form-control" ng-model="curp" name="nombre">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="nombre" class="col-2 col-form-label">Email: </label>
+					<div class="col-10">
+						<input type="text" class="form-control" ng-model="email" name="nombre">
+					</div>
+				</div>
+
+			</div>
+			<div class="col-12">
+				<button class="btn btn-primary float-right" ng-click="guardar()">Guardar</button>
+			</div>
+			<div class="col-12" style="margin-top: 20px">
+				<table class="table">
 					<thead>
 						<tr>
 							<th>Nombre</th>
-							<th>Imagen</th>
-							<th>Boleto ($)</th>
-							<th>Asientos</th>
-							<th></th>
+							<th>Dirección</th>
+							<th>RFC</th>
+							<th>CURP</th>
+							<th>Email</th>
+							<th>Opciones</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="x in peliculas">
+						<tr ng-repeat="x in registros">
 							<td> {{ x.nombre }} </td>
-							<td> <img ng-src="{{ x.img }}" width="100" height="100"></td>
-							<td> {{ x.precio }} </td>
-							<td> {{ x.asientos }} </td>
-							<td>
-								<!-- ng-show: Muestra u oculta un elemento dependiendo del resultado de la condición. También existe
-								ng-hide -->
-
-								<button class="btn btn-success" ng-show="x.asientos > 0" ng-click="comprar($index)">Comprar</button>
-								
-								<!-- ng-class: Aplica una clase a un nodo a partir de una condición -->
-								<!-- ng-click: Asigna una función para el clic -->
-								<!-- <button class="btn btn-primary" ng-class="(x.asientos == 0) ? 'btn btn-danger disabled': ''" ng-click="comprar($index)">Comprar</button> -->
-							</td>
+							<td> {{ x.direccion }} </td>
+							<td> {{ x.rfc }} </td>
+							<td> {{ x.curp }} </td>
+							<td> {{ x.email }} </td>
+							<td><button class="btn btn-danger" ng-click="borrar($index)">Eliminar</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -50,39 +90,23 @@
 <script>
 	var app = angular.module('app', []);
 	app.controller('ctrl', function($scope) {
-		$scope.titulo = 'Películas';
-		$scope.peliculas = [ {
-				nombre: 'Star wars',
-				img: 'assets/img/hello-there.jpg',
-				precio: 37,
-				asientos: 10
-			}, {
-				nombre: 'Star wars 2',
-				img: 'assets/img/anakin.jpg',
-				precio: 37,
-				asientos: 0
-			}, {
-				nombre: 'Avengers',
-				img: 'assets/img/hawkeye.jpg',
-				precio: 37,
-				asientos: 150
-			}, {
-				nombre: 'Avengers 2',
-				img: 'assets/img/Thanos.jpg',
-				precio: 37,
-				asientos: 150
+		$scope.titulo = 'Datos personales';
+		$scope.registros = [];
+
+		$scope.guardar = function() {
+			$scope.registros.push({
+				nombre: $scope.nombre,
+				direccion: $scope.direccion,
+				rfc: $scope.rfc,
+				curp: $scope.curp,
+				email: $scope.email
+			});
+		}
+
+		$scope.borrar = function(index) {
+			if(confirm('¿Eliminar el registro?')) {
+				$scope.registros.splice(index, 1);
 			}
-		];
-
-		//Comprar fue definido dentro del controlador
-		$scope.comprar = function(index) {
-			if($scope.peliculas[index].asientos == 0)
-				alert('Asientos agotados');
-
-			else {
-				$scope.peliculas[index].asientos--;
-			}
-
 		}
 	});
 
