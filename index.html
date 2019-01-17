@@ -3,107 +3,76 @@
 
 <head>
 	<meta charset="UTF-8">
+	<title>Práctica 5</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Angular práctica 2</title>
-	<script src="assets/js/angular.js"></script>
 	<link rel="stylesheet" href="assets/styles/bootstrap.min.css">
+	<script src="assets/js/angular.js"></script>
 	<style>
-		input[type=text]
-		{
-			padding: 10px;
-		} 
-
 		.error-msg
 		{
-			color: #FA0000
+			color: #FE0000;
+			font-size: 11px;
 		}
 	</style>
 </head>
 
 <body>
-	<div class="container-fluid" ng-controller="ctrl">
-		<div class="row">
+	<div class="container-fluid">
+		<div class="container">
 			<div class="col-12">
-				<h1 class="title"> {{ titulo }} </h1>
+				<h1 class="title">Alta pacientes</h1>
 			</div>
-			<div class="col-12" style="margin-top: 20px;">
-				<form name="frmUsuario">
-					<div class="form-group row">
-						<label for="nombre" class="col-2 col-form-label">Nombre: </label>
-						<div class="col-10">
-							<input type="text" class="form-control" ng-model="persona.nombre" name="nombre" required>
-							<span class="error-msg" ng-show="frmUsuario.nombre.$error.required && frmUsuario.nombre.$dirty">Este campo no
-								puede estar vacío</span>
-						</div>
+		</div>
+		<div ng-controller="ctrl">
+			<form name="frmPaciente">
+				<div class="form-row">
+					<div class="form-group col-12">
+						<label>Nombre</label>
+						<input type="text" class="form-control" ng-model="paciente.nombre" name="nombre" required>
+						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
+							campo</span>
 					</div>
+				</div>
 
-					<div class="form-group row">
-						<label for="nombre" class="col-2 col-form-label">Dirección: </label>
-						<div class="col-10">
-							<input type="text" class="form-control" ng-model="persona.direccion" name="direccion">
-						</div>
+				<div class="col-12"></div>
+				<div class="col-12"></div>
+
+				<div class="form-row">
+					<div class="form-group col-4">
+						<label>Edad</label>
+						<input type="number" class="form-control" ng-model="paciente.edad" name="edad" required>
 					</div>
-
-					<div class="form-group row">
-						<label for="nombre" class="col-2 col-form-label">RFC: </label>
-						<div class="col-10">
-							<input type="text" class="form-control" ng-model="persona.rfc" name="rfc">
-						</div>
+					<div class="form-group col-8">
+						<label>Direccion</label>
+						<input type="text" class="form-control" ng-model="paciente.direccion" name="direccion" required>
 					</div>
+				</div>
 
-					<div class="form-group row">
-						<label for="nombre" class="col-2 col-form-label">CURP: </label>
-						<div class="col-10">
-							<input type="text" class="form-control" ng-model="persona.curp" name="curp">
-						</div>
+				<div class="form-row">
+					<div class="form-group col-4">
+						<label>No. Hijos</label>
+						<input type="number" name="nHijos" class="form-control" ng-model="paciente.nHijos" required>
 					</div>
-
-					<div class="form-group row">
-						<label for="nombre" class="col-2 col-form-label">Email: </label>
-						<div class="col-10">
-							<input type="text" class="form-control" ng-model="persona.email" name="email">
-						</div>
+					<div class="form-group col-8">
+						<label>Fecha ingreso</label>
+						<input type="date" name="fecha" class="form-control" ng-model="paciente.fecha" required>
 					</div>
+				</div>
 
-			</div>
-			<div class="col-12">
-				<button class="btn btn-primary float-right" ng-disabled="!frmUsuario.$valid" ng-click="guardar()">Guardar</button>
-			</div>
+				<div class="form-row">
+					<div class="form-group col-12">
+						<label>Estado</label>
+						<select class="form-control" name="Estado" ng-model="color.estado" ng-options="est.estado for est in estados"
+						 required>
+							<option value="">--Seleccione una opción--</option>
+						</select>
+					</div>
+				</div>
 			</form>
-			<div class="col-12">&nbsp;</div>
-			<div class="col-12">&nbsp;</div>
 			<div class="col-12">
-				<label>Buscar:</label>
-				<input type="text" class="form-control" ng-model="nombre">
-			</div>
-			<div class="col-12" style="margin-top: 20px">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Nombre</th>
-							<th>Dirección</th>
-							<th>RFC</th>
-							<th>CURP</th>
-							<th>Email</th>
-							<th>Opciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="x in registros | filter: nombre as r">
-							<td> {{ x.nombre }} </td>
-							<td> {{ x.direccion }} </td>
-							<td> {{ x.rfc }} </td>
-							<td> {{ x.curp }} </td>
-							<td> {{ x.email }} </td>
-							<td><button class="btn btn-danger" ng-click="borrar($index)">Eliminar</button></td>
-						</tr>
-					</tbody>
-					<tbody ng-if="!r.length">
-						<tr>
-							<td colspan="6" align="center">:(</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="float-right">
+					<button class="btn btn-primary" ng-click="guardar()" ng-disabled="!frmUsuario.$valid">Guardar</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -111,22 +80,29 @@
 <script>
 	var app = angular.module('app', []);
 	app.controller('ctrl', function ($scope) {
-		$scope.titulo = 'Datos personales';
-		$scope.registros = [];
-		$scope.persona = {};
+		$scope.pacientes = [];
+		$scope.estados = [{
+			estado: 'Verde',
+			value: 'Vivo',
+			id: 1
+		}, {
+			estado: 'Amarillo',
+			value: 'Herido',
+			id: 2
+		}, {
+			estado: 'Rojo',
+			value: 'Muerto',
+			id: 3
+		}]
 
+
+		$scope.paciente = {};
 		$scope.guardar = function () {
-			$scope.registros.push($scope.persona);
-			$scope.persona = {};
-			$scope.frmUsuario.$setPristine();
-		}
-
-		$scope.borrar = function (index) {
-			//Equivalente a: if(confirm....)
-			confirm('¿Eliminar el registro') ? $scope.registros.splice(index, 1) : console.debug("Hola");
+			$scope.pacientes.push($scope.paciente);
+			$scope.paciente = {}
+			$scope.frmPaciente.$setPristine();
 		}
 	});
-
 </script>
 
 </html>
