@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html ng-app="app">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Angular práctica 2</title>
 	<script src="assets/js/angular.js"></script>
 	<link rel="stylesheet" href="assets/styles/bootstrap.min.css">
-	<style type="text-css">
+	<style>
 		input[type=text]
 		{
-			padding: 10;
-			margin: 0 10;
+			padding: 10px;
 		} 
+
+		.error-msg
+		{
+			color: #FA0000
+		}
 	</style>
 </head>
+
 <body>
 	<div class="container-fluid" ng-controller="ctrl">
 		<div class="row">
@@ -21,44 +27,54 @@
 				<h1 class="title"> {{ titulo }} </h1>
 			</div>
 			<div class="col-12" style="margin-top: 20px;">
-				<div class="form-group row">
-					<label for="nombre" class="col-2 col-form-label">Nombre: </label>
-					<div class="col-10">
-						<input type="text" class="form-control" ng-model="nombre" name="nombre">
+				<form name="frmUsuario">
+					<div class="form-group row">
+						<label for="nombre" class="col-2 col-form-label">Nombre: </label>
+						<div class="col-10">
+							<input type="text" class="form-control" ng-model="persona.nombre" name="nombre" required>
+							<span class="error-msg" ng-show="frmUsuario.nombre.$error.required && frmUsuario.nombre.$dirty">Este campo no
+								puede estar vacío</span>
+						</div>
 					</div>
-				</div>
-				
-				<div class="form-group row">
-					<label for="nombre" class="col-2 col-form-label">Dirección: </label>
-					<div class="col-10">
-						<input type="text" class="form-control" ng-model="direccion" name="nombre">
-					</div>
-				</div>
 
-				<div class="form-group row">
-					<label for="nombre" class="col-2 col-form-label">RFC: </label>
-					<div class="col-10">
-						<input type="text" class="form-control" ng-model="rfc" name="nombre">
+					<div class="form-group row">
+						<label for="nombre" class="col-2 col-form-label">Dirección: </label>
+						<div class="col-10">
+							<input type="text" class="form-control" ng-model="persona.direccion" name="direccion">
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label for="nombre" class="col-2 col-form-label">CURP: </label>
-					<div class="col-10">
-						<input type="text" class="form-control" ng-model="curp" name="nombre">
+					<div class="form-group row">
+						<label for="nombre" class="col-2 col-form-label">RFC: </label>
+						<div class="col-10">
+							<input type="text" class="form-control" ng-model="persona.rfc" name="rfc">
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label for="nombre" class="col-2 col-form-label">Email: </label>
-					<div class="col-10">
-						<input type="text" class="form-control" ng-model="email" name="nombre">
+					<div class="form-group row">
+						<label for="nombre" class="col-2 col-form-label">CURP: </label>
+						<div class="col-10">
+							<input type="text" class="form-control" ng-model="persona.curp" name="curp">
+						</div>
 					</div>
-				</div>
+
+					<div class="form-group row">
+						<label for="nombre" class="col-2 col-form-label">Email: </label>
+						<div class="col-10">
+							<input type="text" class="form-control" ng-model="persona.email" name="email">
+						</div>
+					</div>
 
 			</div>
 			<div class="col-12">
-				<button class="btn btn-primary float-right" ng-click="guardar()">Guardar</button>
+				<button class="btn btn-primary float-right" ng-disabled="!frmUsuario.$valid" ng-click="guardar()">Guardar</button>
+			</div>
+			</form>
+			<div class="col-12">&nbsp;</div>
+			<div class="col-12">&nbsp;</div>
+			<div class="col-12">
+				<label>Buscar:</label>
+				<input type="text" class="form-control" ng-model="nombre">
 			</div>
 			<div class="col-12" style="margin-top: 20px">
 				<table class="table">
@@ -73,13 +89,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="x in registros">
+						<tr ng-repeat="x in registros | filter: nombre as r">
 							<td> {{ x.nombre }} </td>
 							<td> {{ x.direccion }} </td>
 							<td> {{ x.rfc }} </td>
 							<td> {{ x.curp }} </td>
 							<td> {{ x.email }} </td>
 							<td><button class="btn btn-danger" ng-click="borrar($index)">Eliminar</button></td>
+						</tr>
+					</tbody>
+					<tbody ng-if="!r.length">
+						<tr>
+							<td colspan="6" align="center">:(</td>
 						</tr>
 					</tbody>
 				</table>
@@ -89,26 +110,23 @@
 </body>
 <script>
 	var app = angular.module('app', []);
-	app.controller('ctrl', function($scope) {
+	app.controller('ctrl', function ($scope) {
 		$scope.titulo = 'Datos personales';
 		$scope.registros = [];
+		$scope.persona = {};
 
-		$scope.guardar = function() {
-			$scope.registros.push({
-				nombre: $scope.nombre,
-				direccion: $scope.direccion,
-				rfc: $scope.rfc,
-				curp: $scope.curp,
-				email: $scope.email
-			});
+		$scope.guardar = function () {
+			$scope.registros.push($scope.persona);
+			$scope.persona = {};
+			$scope.frmUsuario.$setPristine();
 		}
 
-		$scope.borrar = function(index) {
-			if(confirm('¿Eliminar el registro?')) {
-				$scope.registros.splice(index, 1);
-			}
+		$scope.borrar = function (index) {
+			//Equivalente a: if(confirm....)
+			confirm('¿Eliminar el registro') ? $scope.registros.splice(index, 1) : console.debug("Hola");
 		}
 	});
 
 </script>
+
 </html>
