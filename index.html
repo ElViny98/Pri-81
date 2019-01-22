@@ -41,10 +41,14 @@
 					<div class="form-group col-4">
 						<label>Edad</label>
 						<input type="number" class="form-control" ng-model="paciente.edad" name="edad" required>
+						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
+							campo</span>
 					</div>
 					<div class="form-group col-8">
 						<label>Direccion</label>
 						<input type="text" class="form-control" ng-model="paciente.direccion" name="direccion" required>
+						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
+							campo</span>
 					</div>
 				</div>
 
@@ -52,34 +56,75 @@
 					<div class="form-group col-4">
 						<label>No. Hijos</label>
 						<input type="number" name="nHijos" class="form-control" ng-model="paciente.nHijos" required>
+						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
+							campo</span>
 					</div>
 					<div class="form-group col-8">
 						<label>Fecha ingreso</label>
 						<input type="date" name="fecha" class="form-control" ng-model="paciente.fecha" required>
+						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
+							campo</span>
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-12">
 						<label>Estado</label>
-						<select class="form-control" name="Estado" ng-model="color.estado" ng-options="est.estado for est in estados"
+						<select class="form-control" name="Estado" ng-model="paciente.estado" ng-options="est.estado for est in estados"
 						 required>
 							<option value="">--Seleccione una opción--</option>
 						</select>
+						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
+							campo</span>
 					</div>
 				</div>
 			</form>
 			<div class="col-12">
 				<div class="float-right">
-					<button class="btn btn-primary" ng-click="guardar()" ng-disabled="!frmUsuario.$valid">Guardar</button>
+					<button class="btn btn-primary" ng-click="guardar()" ng-disabled="!frmPaciente.$valid">Guardar</button>
 				</div>
+			</div>
+			<div class="col-12" style="margin-top: 40px;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Edad</th>
+							<th>Dirección</th>
+							<th>Hijos</th>
+							<th>Fecha de ingreso</th>
+							<th>Estado</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="x in pacientes as r">
+							<td> {{ x.nombre }} </td>
+							<td> {{ x.edad }} </td>
+							<td> {{ x.direccion }} </td>
+							<td> {{ x.nHijos }} </td>
+							<td> {{ x.fecha }} </td>
+							<td> {{ x.estado.estado }} </td>
+							<td> <button class="btn btn-success" ng-click="editar($index)">Editar</button> </td>
+						</tr>
+					</tbody>
+					<tbody ng-if="!r.length">
+						<tr>
+							<td colspan="7" align="center">SIN REGISTROS</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 </body>
+
 <script>
 	var app = angular.module('app', []);
+	var edit = false;
+	var iedit = -1;
 	app.controller('ctrl', function ($scope) {
+		$scope.paciente = {};
 		$scope.pacientes = [];
 		$scope.estados = [{
 			estado: 'Verde',
@@ -96,11 +141,26 @@
 		}]
 
 
-		$scope.paciente = {};
+		$scope.editar = function (index) {
+			iedit = index;
+			var pc = $scope.pacientes[index];
+			$scope.paciente = pc;
+			edit = true;
+		}
+
 		$scope.guardar = function () {
-			$scope.pacientes.push($scope.paciente);
-			$scope.paciente = {}
-			$scope.frmPaciente.$setPristine();
+			if (!edit) {
+				$scope.pacientes.push($scope.paciente);
+				console.log($scope.pacientes);
+				$scope.paciente = {}
+				$scope.frmPaciente.$setPristine();
+			}
+			else {
+				$scope.pacientes[iedit] = $scope.paciente;
+				$scope.paciente = {};
+				edit = false;
+				$scope.frmPaciente.$setPristine()
+			}
 		}
 	});
 </script>
