@@ -1,168 +1,58 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html lang="es" ng-app="app">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Práctica 5</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="assets/styles/bootstrap.min.css">
-	<script src="assets/js/angular.js"></script>
-	<style>
-		.error-msg
-		{
-			color: #FE0000;
-			font-size: 11px;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Práctica 6</title>
+    <script src="assets/js/angular.js"></script>
+    <script src="assets/js/jquery-3.3.1.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 
 <body>
-	<div class="container-fluid">
-		<div class="container">
-			<div class="col-12">
-				<h1 class="title">Alta pacientes</h1>
-			</div>
-		</div>
-		<div ng-controller="ctrl">
-			<form name="frmPaciente">
-				<div class="form-row">
-					<div class="form-group col-12">
-						<label>Nombre</label>
-						<input type="text" class="form-control" ng-model="paciente.nombre" name="nombre" required>
-						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
-							campo</span>
-					</div>
-				</div>
+    <!-- Menú lateral -->
+    <div class="container-fluid" ng-controller="ctrl" style="padding-left: 0;">
+        <div class="row">
+            <div class="col-2 menu">
+                <div class="img-container">
+                    <img src="assets/img/iconfinder_user_male_172625.svg" alt="Usuario">
+                </div>
+                <div class="list-container">
+                    <ul class="menu-list">
+                        <li>
+                            Catálogo
+                            <ul class="submenu">
+                                <li><a href="#" class="btn btn-link" ng-click="loadPage(1)">Usuarios</a></li>
+                                <li><a href="#" class="btn btn-link" ng-click="loadPage(2)">Libros</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            Préstamos
+                            <ul class="submenu">
+                                <li><a href="#" class="btn btn-link" ng-click="loadPage(3)">Domicilio</a></li>
+                                <li><a href="#" class="btn btn-link" ng-click="loadPage(4)">Devoluciones</a></li>
+                            </ul>
+                        </li>
+                        <li>Configuración
+                            <ul class="submenu">
+                                <li><a href="#" class="btn btn-link" ng-click="loadPage(5)">Préstamos</a></li>
+                                <li><a href="#" class="btn btn-link" ng-click="loadPage(6)">Recargos</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Cargar contenido aquí. -->
+            <div class="col-10 main-content" id="main-content">
 
-				<div class="col-12"></div>
-				<div class="col-12"></div>
-
-				<div class="form-row">
-					<div class="form-group col-4">
-						<label>Edad</label>
-						<input type="number" class="form-control" ng-model="paciente.edad" name="edad" required>
-						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
-							campo</span>
-					</div>
-					<div class="form-group col-8">
-						<label>Direccion</label>
-						<input type="text" class="form-control" ng-model="paciente.direccion" name="direccion" required>
-						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
-							campo</span>
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="form-group col-4">
-						<label>No. Hijos</label>
-						<input type="number" name="nHijos" class="form-control" ng-model="paciente.nHijos" required>
-						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
-							campo</span>
-					</div>
-					<div class="form-group col-8">
-						<label>Fecha ingreso</label>
-						<input type="date" name="fecha" class="form-control" ng-model="paciente.fecha" required>
-						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
-							campo</span>
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="form-group col-12">
-						<label>Estado</label>
-						<select class="form-control" name="Estado" ng-model="paciente.estado" ng-options="est.estado for est in estados"
-						 required>
-							<option value="">--Seleccione una opción--</option>
-						</select>
-						<span class="error-msg" ng-show="frmPaciente.nombre.$error.required && frmPaciente.nombre.$dirty">Completar este
-							campo</span>
-					</div>
-				</div>
-			</form>
-			<div class="col-12">
-				<div class="float-right">
-					<button class="btn btn-primary" ng-click="guardar()" ng-disabled="!frmPaciente.$valid">Guardar</button>
-				</div>
-			</div>
-			<div class="col-12" style="margin-top: 40px;">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Nombre</th>
-							<th>Edad</th>
-							<th>Dirección</th>
-							<th>Hijos</th>
-							<th>Fecha de ingreso</th>
-							<th>Estado</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="x in pacientes as r">
-							<td> {{ x.nombre }} </td>
-							<td> {{ x.edad }} </td>
-							<td> {{ x.direccion }} </td>
-							<td> {{ x.nHijos }} </td>
-							<td> {{ x.fecha }} </td>
-							<td> {{ x.estado.estado }} </td>
-							<td> <button class="btn btn-success" ng-click="editar($index)">Editar</button> </td>
-						</tr>
-					</tbody>
-					<tbody ng-if="!r.length">
-						<tr>
-							<td colspan="7" align="center">SIN REGISTROS</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </body>
-
-<script>
-	var app = angular.module('app', []);
-	var edit = false;
-	var iedit = -1;
-	app.controller('ctrl', function ($scope) {
-		$scope.paciente = {};
-		$scope.pacientes = [];
-		$scope.estados = [{
-			estado: 'Verde',
-			value: 'Vivo',
-			id: 1
-		}, {
-			estado: 'Amarillo',
-			value: 'Herido',
-			id: 2
-		}, {
-			estado: 'Rojo',
-			value: 'Muerto',
-			id: 3
-		}]
-
-
-		$scope.editar = function (index) {
-			iedit = index;
-			var pc = $scope.pacientes[index];
-			$scope.paciente = pc;
-			edit = true;
-		}
-
-		$scope.guardar = function () {
-			if (!edit) {
-				$scope.pacientes.push($scope.paciente);
-				console.log($scope.pacientes);
-				$scope.paciente = {}
-				$scope.frmPaciente.$setPristine();
-			}
-			else {
-				$scope.pacientes[iedit] = $scope.paciente;
-				$scope.paciente = {};
-				edit = false;
-				$scope.frmPaciente.$setPristine()
-			}
-		}
-	});
-</script>
+<script src="assets/js/main-script.js"></script>
 
 </html>
