@@ -1,0 +1,101 @@
+<div class="active-panel" ng-show="!showTable">
+    <div class="row align-button">
+        <div class="col-12">
+            <div class="float-right">
+                <button class="btn btn-light" ng-click="verLibros()"><i class="fa fa-book" aria-hidden="true"></i>&nbspVer
+                    libros</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-container">
+        <form name="frmLibros">
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>ISBN</label>
+                    <input type="text" class="form-control" ng-model="libro.isbn" name="isbn" required>
+                    <span class="error-msg" ng-show="frmLibros.isbn.$error.required && frmLibros.isbn.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Título</label>
+                    <input type="text" class="form-control" ng-model="libro.titulo" name="titulo" required>
+                    <span class="error-msg" ng-show="frmLibros.titulo.$error.required && frmLibros.titulo.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Editorial</label>
+                    <input type="text" class="form-control" ng-model="libro.editorial" name="editorial" required>
+                    <span class="error-msg" ng-show="frmLibros.editorial.$error.required && frmLibros.editorial.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Autor(es)</label>
+                    <input type="text" class="form-control" ng-model="libro.autor" name="autor" required>
+                    <span class="error-msg" ng-show="frmLibros.autor.$error.required && frmLibros.autor.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>#Ejemplares</label>
+                    <input type="text" numbers-only class="form-control" ng-model="libro.ejemplares" name="ejemplares"
+                        required>
+                    <span class="error-msg" ng-show="frmLibros.ejemplares.$error.required && frmLibros.ejemplares.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="col-12">
+                    <div class="float-right">
+                        <button class="btn btn-danger" ng-show="editingBook" ng-click="eliminar()">Eliminar</button>
+                        <button class="btn btn-primary" ng-click="newBook()" ng-disabled="!frmLibros.$valid">{{
+                            btnText }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-container" ng-show="showTable">
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-2">
+            <button class="btn btn-dark" ng-click="showForm()"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbspVolver
+                a registro</button>
+        </div>
+        <div class="col-7">
+            <h4 align="center">Libros registrados</h4>
+        </div>
+        <div class="col-3">
+            <div class="float-right">
+                <input type="text" ng-model="buscar" class="form-control" placeholder="Buscar">
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>Título</th>
+                <th>Editorial</th>
+                <th>Autor(es)</th>
+                <th>Ejemplares</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="x in libros | filter: buscar as u" ng-dblclick="getLibro($index)">
+                <td> {{ x.isbn }} </td>
+                <td> {{ x.titulo }} </td>
+                <td> {{ x.editorial }} </td>
+                <td> {{ x.autor }} </td>
+                <td> {{ x.ejemplares }} </td>
+            </tr>
+        </tbody>
+        <tbody ng-if="!u.length">
+            <tr>
+                <td colspan="7" align="center">NO HAY REGISTROS</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,106 @@
+<div class="form-container">
+    <div class="config-title">
+        Cliente
+    </div>
+    <hr>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" ng-keypress="keyMatricula()" ng-model="domicilio.matricula" placeholder="Matricula">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" ng-click="buscarMatricula()"><i class="fa fa-search"></i>&nbspBuscar</button>
+        </div>
+    </div>
+
+    <div ng-class="showingUsers ? 'show-table' : 'hidden-table'">
+        <!-- Table oculta -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Matricula</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in usuarios as r" ng-dblclick="getUser($index)">
+                    <td> {{ x.matricula }} </td>
+                    <td> {{ x.nombre }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon2"><i class="fa fa-user">&nbsp</i>Nombre</span>
+        </div>
+        <input type="text" ng-model="domicilio.nombre" class="form-control disabled" readonly>
+    </div>
+
+    <div class="config-title">
+        Libro
+    </div>
+    <hr>
+
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" ng-keypress="keyISBN()" ng-model="domicilio.ISBN" placeholder="ISBN">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" ng-click="buscarISBN()"><i class="fa fa-search"></i>&nbspBuscar</button>
+        </div>
+    </div>
+
+    <!-- Table oculta -->
+    <div ng-class="showingBooks ? 'show-table' : 'hidden-table'">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Título</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in libros as r" ng-dblclick="getLibro($index)">
+                    <td> {{ x.isbn }} </td>
+                    <td> {{ x.titulo }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon2"><i class="fa fa-book">&nbsp</i>Título</span>
+        </div>
+        <input type="text" class="form-control disabled" ng-model="domicilio.titulo" readonly>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon2"><i class="fa fa-book">&nbsp</i>Editorial</span>
+        </div>
+        <input type="text" class="form-control disabled" ng-model="domicilio.editorial" readonly>
+    </div>
+
+    <div class="config-title">
+        Préstamo
+    </div>
+    <hr>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i>&nbspFecha de entrega</span>
+        </div>
+        <input type="date" ng-model="domicilio.fecha" class="form-control">
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon2"><i class="fa fa-hashtag">&nbsp</i>Ejemplares</span>
+        </div>
+        <input numbers-only type="text" ng-model="domicilio.ejemplares" class="form-control">
+    </div>
+
+    <div class="col-12">
+        <div class="float-right">
+            <button class="btn btn-primary" ng-click="guardar()">Guardar</button>
+        </div>
+    </div>
+</div>

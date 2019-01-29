@@ -1,0 +1,120 @@
+<!-- Para mover la vista entre pantallas -->
+<div class="active-panel" ng-show="!showTable">
+    <div class="row align-button">
+        <div class="col-12">
+            <div class="float-right">
+                <button class="btn btn-light" ng-click="verUsuarios()"><i class="fa fa-users" aria-hidden="true"></i>&nbspVer
+                    usuarios</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-container">
+        <form name="frmUsuarios">
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Matricula</label>
+                    <input type="text" name="matricula" ng-model="usuario.matricula" class="form-control" required>
+                    <span class="error-msg" ng-show="frmUsuarios.matricula.$error.required && frmUsuarios.matricula.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" ng-model="usuario.nombre" class="form-control" required>
+                    <span class="error-msg" ng-show="frmUsuarios.nombre.$error.required && frmUsuarios.nombre.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Domicilio</label>
+                    <input type="text" name="domicilio" ng-model="usuario.domicilio" class="form-control" required>
+                    <span class="error-msg" ng-show="frmUsuarios.domicilio.$error.required && frmUsuarios.domicilio.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-6">
+                    <label>Correo electrónico:</label>
+                    <input type="text" name="correo" ng-model="usuario.correo" class="form-control" required>
+                    <span class="error-msg" ng-show="frmUsuarios.correo.$error.required && frmUsuarios.correo.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-6">
+                    <label>RFC:</label>
+                    <input type="text" name="rfc" ng-model="usuario.rfc" class="form-control" required maxlength="20">
+                    <span class="error-msg" ng-show="frmUsuarios.rfc.$error.required && frmUsuarios.rfc.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-6">
+                    <label>Celular:</label>
+                    <input type="text" name="celular" numbers-only ng-model="usuario.celular" class="form-control"
+                        required>
+                    <span class="error-msg" ng-show="frmUsuarios.celular.$error.required && frmUsuarios.celular.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-6">
+                    <label>Teléfono:</label>
+                    <input type="text" name="tel" numbers-only ng-model="usuario.tel" class="form-control" required>
+                    <span class="error-msg" ng-show="frmUsuarios.tel.$error.required && frmUsuarios.tel.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="col-12">
+                    <div class="float-right">
+                        <button class="btn btn-danger" ng-show="editingUser" ng-click="eliminar()">Eliminar</button>
+                        <button class="btn btn-primary" ng-click="newUser()" ng-disabled="!frmUsuarios.$valid">{{
+                            btnText }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-container" ng-show="showTable">
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-2">
+            <button class="btn btn-dark" ng-click="showForm()"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbspVolver
+                a registro</button>
+        </div>
+        <div class="col-7">
+            <h4 align="center">Usuarios registrados</h4>
+        </div>
+        <div class="col-3">
+            <div class="float-right">
+                <input type="text" ng-model="buscar" class="form-control" placeholder="Buscar">
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Matricula</th>
+                <th>Nombre</th>
+                <th>Domiclio</th>
+                <th>Correo electrónico</th>
+                <th>RFC</th>
+                <th>Celular</th>
+                <th>Teléfono</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="x in usuarios | filter: buscar as u" ng-dblclick="getUsuario($index)">
+                <td> {{ x.matricula }} </td>
+                <td> {{ x.nombre }} </td>
+                <td> {{ x.domicilio }} </td>
+                <td> {{ x.correo }} </td>
+                <td> {{ x.rfc }} </td>
+                <td> {{ x.celular }} </td>
+                <td> {{ x.tel }} </td>
+            </tr>
+        </tbody>
+        <tbody ng-if="!u.length">
+            <tr>
+                <td colspan="7" align="center">NO HAY REGISTROS</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

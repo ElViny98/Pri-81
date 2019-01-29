@@ -60,6 +60,7 @@
 
 .menu {
     background: #011644;
+    overflow: hidden;
     height: 100vh;
     position: sticky;
     top: 0;
@@ -67,6 +68,18 @@
 
 .main-content {
     font-family: 'Open sans', sans-serif;
+    padding: 0;
+    height: 100vh;
+    padding-top: 20px;
+}
+
+.align-button {
+    width: 98%;
+    margin: auto;
+}
+
+.inactive-panel {
+    display: none;
 }
 
 .error-msg {
@@ -80,10 +93,74 @@
 }
 
 .form-container {
+    transition: opacity linear 1s;
     margin-top: 20px !important; 
-    background: #E5E7E7;
+    background: #F2F2F2;
     width: 95%;
     margin: auto;
     border-radius: 20px;
     padding: 20px;
+}
+
+.table-container {
+    transition: 1s ease opacity;
+    margin-top: 20px !important; 
+    width: 95%;
+    margin: auto;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.table-container.ng-hide {
+    opacity: 0;
+}
+
+.form-container.ng-hide {
+    opacity: 0;
+}
+
+.config-title {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.config-container {
+    width: 50%;
+    border: 1px solid black;
+    background: #F2F2F2;
+    border-radius: 20px;
+    padding: 20px 0;
+    margin: auto;
+    position: relative;
+}
+
+.disabled {
+    cursor: default;
+}
+
+form.search-box {
+    position: relative !important;
+    display: inline-flex !important;
+}
+
+input.search-box {
+    width: 80%;
+    padding: 2px 0;
+}
+
+.hidden-table {
+    display: none;
+    transition: all 1s ease;
+}
+
+.show-table {
+    display: block;
+    transition: all 1s ease;
+}
+
+button.inside {
+    position: absolute;
+    top: 0;
+    right: 0;
 }

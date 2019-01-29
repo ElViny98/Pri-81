@@ -1,0 +1,92 @@
+<div class="form-container">
+    <div class="form-group col-12">
+        <label>Buscar</label>
+        <input type="text" ng-model="buscar" class="form-control">
+    </div>
+    <div class="col-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Título</th>
+                    <th>Matricula</th>
+                    <th>Fecha de préstamo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in domicilio as r" ng-dblclick="getPrestamo($index)">
+                    <td> {{ x.isbn }} </td>
+                    <td> {{ x.titulo }} </td>
+                    <td> {{ x.matricula }} </td>
+                    <td> {{ x.fecha }} </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form name="frmLibros">
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>ISBN</label>
+                    <input type="text" class="form-control disabled" ng-model="devoluciones.isbn" name="isbn" readonly>
+                    <span class="error-msg" ng-show="frmLibros.isbn.$error.required && frmLibros.isbn.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Título</label>
+                    <input type="text" class="form-control disabled" ng-model="devoluciones.titulo" name="titulo"
+                        readonly>
+                    <span class="error-msg" ng-show="frmLibros.titulo.$error.required && frmLibros.titulo.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Matricula</label>
+                    <input type="text" class="form-control disabled" ng-model="devoluciones.matricula" name="editorial"
+                        readonly>
+                    <span class="error-msg" ng-show="frmLibros.editorial.$error.required && frmLibros.editorial.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control disabled" ng-model="devoluciones.nombre" name="autor"
+                        readonly>
+                    <span class="error-msg" ng-show="frmLibros.autor.$error.required && frmLibros.autor.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Fecha préstamo</label>
+                    <input type="date" class="form-control disabled" ng-model="devoluciones.fechaP" name="ejemplares"
+                        readonly>
+                    <span class="error-msg" ng-show="frmLibros.ejemplares.$error.required && frmLibros.ejemplares.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Fecha entrega</label>
+                    <input type="date" numbers-only class="form-control" ng-model="devoluciones.fechaE" name="ejemplares"
+                        required>
+                    <span class="error-msg" ng-show="frmLibros.ejemplares.$error.required && frmLibros.ejemplares.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Ejemplares solicitados</label>
+                    <input type="text" class="form-control disabled" ng-model="devoluciones.ejemplares" name="autor"
+                        readonly>
+                    <span class="error-msg" ng-show="frmLibros.autor.$error.required && frmLibros.autor.$dirty">Completar
+                        este campo</span>
+                </div>
+
+                <div class="form-group col-12">
+                    <label>Recargo</label>
+                    <input type="text" class="form-control" ng-model="devoluciones.recargos" name="autor" required>
+                    <span class="error-msg" ng-show="frmLibros.autor.$error.required && frmLibros.autor.$dirty">Completar
+                        este campo</span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

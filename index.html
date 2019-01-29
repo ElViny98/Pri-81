@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Práctica 6</title>
+    <base href="/Angular/">
     <script src="assets/js/angular.js"></script>
+    <script src="assets/js/angular-route.js"></script>
     <script src="assets/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/bootstrap.min.css">
     <link rel="stylesheet" href="assets/styles/styles.css">
@@ -26,29 +29,29 @@
                         <li>
                             Catálogo
                             <ul class="submenu">
-                                <li><a href="#" class="btn btn-link" ng-click="loadPage(1)">Usuarios</a></li>
-                                <li><a href="#" class="btn btn-link" ng-click="loadPage(2)">Libros</a></li>
+                                <li><a href="#!usuarios" class="btn btn-link">Usuarios</a></li>
+                                <li><a href="#!libros" class="btn btn-link">Libros</a></li>
                             </ul>
                         </li>
                         <li>
                             Préstamos
                             <ul class="submenu">
-                                <li><a href="#" class="btn btn-link" ng-click="loadPage(3)">Domicilio</a></li>
-                                <li><a href="#" class="btn btn-link" ng-click="loadPage(4)">Devoluciones</a></li>
+                                <li><a href="#!domicilio" class="btn btn-link">Domicilio</a></li>
+                                <li><a href="#!devoluciones" class="btn btn-link">Devoluciones</a></li>
                             </ul>
                         </li>
                         <li>Configuración
                             <ul class="submenu">
-                                <li><a href="#" class="btn btn-link" ng-click="loadPage(5)">Préstamos</a></li>
-                                <li><a href="#" class="btn btn-link" ng-click="loadPage(6)">Recargos</a></li>
+                                <li><a href="#!prestamos" class="btn btn-link">Préstamos</a></li>
+                                <li><a href="#!recargos" class="btn btn-link">Recargos</a></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
             </div>
             <!-- Cargar contenido aquí. -->
-            <div class="col-10 main-content" id="main-content">
-
+            <div class="col-10 main-content">
+                <div ng-view style="height: 100%;"></div>
             </div>
         </div>
     </div>

@@ -1,0 +1,24 @@
+<div style="height: 100%; padding-top: 20px;">
+    <div class="config-container">
+        <div class="config-title">
+            Configuración: Préstamos
+        </div>
+        <hr>
+
+        <div class="form-group col-12">
+            <label>Máximo de ejemplares</label>
+            <input type="text" numbers-only ng-model="configuracion.maxEjemplares" class="form-control">
+            <span class="error-msg" ng-show="configuracion.maxEjemplares <= 0">Completar este campo</span>
+        </div>
+
+        <div class="form-group col-12">
+            <label>Libros de reserva</label>
+            <input type="text" numbers-only ng-model="configuracion.reserva" class="form-control">
+            <span class="error-msg" ng-show="configuracion.reserva <= 0">Completar este campo</span>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" style="width: 100%;" ng-click="guaradar()">Guardar</button>
+        </div>
+    </div>
+</div>
